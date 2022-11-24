@@ -4,24 +4,24 @@ import Item from "./components/Item";
 function App() {
   const list = [
     {
-      name: "Banana",
-      price: "20",
-      img: "https://images.immediate.co.uk/production/volatile/sites/30/2017/01/Bananas-218094b-scaled.jpg",
+      name: "Humburger",
+      price: "70",
+      img: "https://www.maadanya.co.il/wp-content/uploads/2020/03/13-1.jpg",
     },
     {
-      name: "Apple",
-      price: "25",
-      img: "https://s3-us-west-2.amazonaws.com/melingoimages/Images/4315.jpg",
+      name: "pasta",
+      price: "5",
+      img: "https://www.jessicagavin.com/wp-content/uploads/2020/07/how-to-cook-pasta-3-1200.jpg",
     },
     {
-      name: "Rice papaer",
+      name: "Rice",
       price: "30",
       img: "https://m.media-amazon.com/images/I/81Lc91yOehL.jpg",
     },
     {
-      name: "Potatos",
+      name: "Avocado",
       price: "10",
-      img: "https://media.istockphoto.com/id/157430678/photo/three-potatoes.jpg?s=612x612&w=0&k=20&c=qkMoEgcj8ZvYbzDYEJEhbQ57v-nmkHS7e88q8dv7TSA=",
+      img: "https://thekitchencommunity.org/wp-content/uploads/2021/03/Can-You-Refrigerate-Avocados-1200x675.jpg",
     },
   ];
   return (
