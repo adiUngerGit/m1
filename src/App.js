@@ -26,9 +26,11 @@ function App() {
   ];
   return (
     <div className="App">
+      <p>SHOP LIST</p>
       {list.map((item) => {
         return <Item name={item.name} price={item.price} img={item.img}></Item>;
       })}
+      <button>Shopping Cart</button>
     </div>
   );
 }

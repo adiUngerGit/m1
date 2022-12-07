@@ -10,7 +10,6 @@
     margin-bottom: 20px;
     margin-top: 10px;
     
-
 }
 img{
     width: 50px;
@@ -18,3 +17,8 @@ img{
     margin: 10px;
 
 }
+ #add{
+    height: 20px;
+    width: 50px;
+    text-align: center;
+ }
