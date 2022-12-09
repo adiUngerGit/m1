@@ -6,59 +6,60 @@ const Product = require('../models/product');
 const orderUpdate = async (req, res) => {
     let result;
     if (!req.body.productName) {
-        res.status(StatusCodes.BAD_REQUEST).send('Please provide values');
+        return res.status(StatusCodes.BAD_REQUEST).send('Please provide values');
     }
 
     let product_scheme = await Product.findOne({name: req.body.productName});
     if (!product_scheme) {
-        res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`No product was found by the name ${req.body.productName}`);
+        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`No product was found by the name ${req.body.productName}`);
     }
-    OrderProduct = new OrderProduct({
+    orderProduct = new OrderProduct({
         product: product_scheme._id,
         amount: 1,
     });
     let isOrderExist = await Order.find()
-    if (!isOrderExist) {
+    if (isOrderExist.length==0) {
         newOrder = new Order({
-            user: req.user._id,
-            products: [orderedProduct]
+            products: [orderProduct]
         });
         result = await newOrder.save();
         if (!result) {
-            res.status(StatusCodes.INTERNAL_SERVER_ERROR).send("Failed to save new product");
+            return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send("Failed to save new product");
         }
     } else {
-        const productInOrder = await Order.findOne({products: {$elemMatch: {product: product_scheme._id}}});
-        const productAmount = productInOrder.amount
-        update = {$set: {"products.$.amount": productAmount}};
-        result = await Order.updateOne({
-            products: {$elemMatch: {product: product_scheme._id}}
-        }, update);
-        if (!result) {
-            res.status(StatusCodes.INTERNAL_SERVER_ERROR).send("Failed to update amount");
+        isProductExist= await Order.findOne({products: {$elemMatch: {product: product_scheme._id}}})
+        if(!sProductExist){
+            update = {$inc: {"products.$.amount": 1}};
+            result = await Order.updateOne({
+                products: {$elemMatch: {product: product_scheme._id}}
+            }, update);
+            if (result) {
+                return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send("Failed to update amount");
+            }}else{
+            ///  case for order exist but product isnt exist in order
         }
     }
-return res.status(StatusCodes.CREATED).json({result});
+    return res.status(StatusCodes.CREATED).json({result});
 }
 
-const orderDelete = async (req, res) => {
-    result = await Order.findOneAndDelete({user: user});//user declaration has removed
+const orderDeleteProduct = async (req, res) => {
+    result = await Order.findOneAndDelete({
+        products: {$elemMatch: {product: product_scheme._id}}
+    });
     if (!result) {
-        throw new BaseError.NotFoundError(`Failed to delete order`);
+        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`Failed to delete order`);
     }
 
-    res.status(StatusCodes.OK).json({result});
+    return res.status(StatusCodes.OK).json({result});
 };
 
 const orderList = async (req, res) => {
     let result = await Order.aggregate(
         [
-            {"$match": {user: req.user._id}},
             {"$unwind": "$products"},
             {
                 "$group": {
                     "_id": {
-                        "user": "$user",
                         "product": "$products.product"
                     },
                     "amount": {$sum: "$products.amount"}
@@ -66,7 +67,7 @@ const orderList = async (req, res) => {
             },
             {
                 "$group": {
-                    "_id": "$_id.user",
+                    "_id": "$_id.product",
                     "products": {
                         "$push": {
                             "product": "$_id.product",
@@ -78,7 +79,7 @@ const orderList = async (req, res) => {
         ]);
 
     if (!result) {
-        throw new BaseError.InternalError(`Failed to list orders`);
+        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`Failed to list orders`);
     }
 
     var products = [];
@@ -94,7 +95,7 @@ const orderList = async (req, res) => {
         }
     }
 
-    res.status(StatusCodes.OK).json({result});
+    return res.status(StatusCodes.OK).json({result});
 }
 
 const sortUsersByExpenses = async (req, res) => {
@@ -207,6 +208,6 @@ function sort_dictionary(dictionary) {
 
 module.exports = {
     orderUpdate,
-    orderDelete,
+    orderDeleteProduct,
     orderList,
 };

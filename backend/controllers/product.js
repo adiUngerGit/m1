@@ -4,7 +4,7 @@ const Product = require('../models/product');
 
 const productCreate = async (req, res) => {
     if (!req.body.name || !req.body.price || !req.body.img) {
-        res.status(StatusCodes.BAD_REQUEST).send('Please provide values');
+        return res.status(StatusCodes.BAD_REQUEST).send('Please provide values');
     }
 
     let newProduct = new Product({
@@ -15,14 +15,14 @@ const productCreate = async (req, res) => {
 
     result = await newProduct.save();
     if (!result) {
-        res.status(StatusCodes.INTERNAL_SERVER_ERROR).send("Failed to save new product");
+        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send("Failed to save new product");
     }
     return res.status(StatusCodes.CREATED).json({result});
 }
 
 const productUpdate = async (req, res) => {
     if (!req.body.name || !req.body.price || !req.body.img) {
-        res.status(StatusCodes.BAD_REQUEST).send('Please provide values');
+        return res.status(StatusCodes.BAD_REQUEST).send('Please provide values');
     }
     productFound = await Product.findOne({name: req.body.name})
     if (!productFound) {

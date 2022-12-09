@@ -3,12 +3,12 @@ const express = require('express');
 const router = express.Router();
 const {
     orderUpdate,
-    orderDelete,
+    orderDeleteProduct,
     orderList,
 } = require('../controllers/order');
 
 router.route('/update').post(orderUpdate);
-router.route('/delete').post(orderDelete);
+router.route('/delete').post(orderDeleteProduct);
 router.route('/list').get(orderList);
 
 module.exports = router;
