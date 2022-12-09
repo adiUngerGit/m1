@@ -6,7 +6,10 @@ const productCreate = async (req, res) => {
     if (!req.body.name || !req.body.price || !req.body.img) {
         return res.status(StatusCodes.BAD_REQUEST).send('Please provide values');
     }
-
+    productFound = await Product.findOne({name: req.body.name})
+    if (productFound) {
+        return res.status(StatusCodes.BAD_REQUEST).send('Product already exist');
+    }
     let newProduct = new Product({
         name: req.body.name,
         price: req.body.price,
@@ -26,7 +29,7 @@ const productUpdate = async (req, res) => {
     }
     productFound = await Product.findOne({name: req.body.name})
     if (!productFound) {
-        res.status(StatusCodes.BAD_REQUEST).send('Product not found');
+       return res.status(StatusCodes.BAD_REQUEST).send('Product not found');
     }
     // using callback
     result = await Product.findOneAndUpdate({name: req.body.name}, {
