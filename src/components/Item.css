@@ -17,8 +17,10 @@ img{
     margin: 10px;
 
 }
- #add{
-    height: 20px;
-    width: 50px;
+ #button{
+    height: min-content;
+    width: min-content;
     text-align: center;
+    padding:initial;
+
  }
