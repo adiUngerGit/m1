@@ -50,10 +50,7 @@ const orderUpdate = async (req, res) => {
       }
     } else {
       //Order exists, but product is not yet listed in order's product list
-      result = await Order.update(
-        {},
-        { $push: { products: orderProduct(product_scheme) } }
-      );
+      result = await Order.update({});
       if (!result) {
         return res
           .status(StatusCodes.INTERNAL_SERVER_ERROR)

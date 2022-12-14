@@ -1,39 +1,28 @@
 .ShopList {
     text-align: center;
+    background-color: aquamarine;
   }
-  
-  .App-logo {
-    height: 40vmin;
-    pointer-events: none;
+  #titel{
+    font-size: 50px;
+    font-family: Monospace	;
+
   }
-  
-  @media (prefers-reduced-motion: no-preference) {
-    .App-logo {
-      animation: App-logo-spin infinite 20s linear;
-    }
+  p{
+    font-family: Monospace;
+    font-size: 30px;
   }
-  
-  .App-header {
-    background-color: #282c34;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: calc(10px + 2vmin);
-    color: white;
-  }
-  
-  .App-link {
-    color: #61dafb;
-  }
-  
-  @keyframes App-logo-spin {
-    from {
-      transform: rotate(0deg);
-    }
-    to {
-      transform: rotate(360deg);
-    }
-  }
-  
+  button{
+    height: min-content;
+    width: min-content;
+    text-align: center;
+    padding:100px;
+    height: auto;
+    width: auto;
+    font-size:xx-large;
+    background-color:rgb(76, 148, 216);
+    font-family: Monospace;
+    /* border-radius: 20%; */
+    padding: 30px;
+    border-radius: 10px;
+
+ };

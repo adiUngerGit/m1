@@ -22,7 +22,7 @@ function Home() {
 
   return (
     <div className="Home">
-      <p>Shop List</p>
+      <p>products</p>
       {list.map((item) => {
         return (
           <Item
@@ -33,7 +33,9 @@ function Home() {
           ></Item>
         );
       })}
-      <Link to="/ShopList">Shoping List</Link>
+      <Link id="link" to="/ShopList">
+        Shoping List
+      </Link>
     </div>
   );
 }

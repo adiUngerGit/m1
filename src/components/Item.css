@@ -1,26 +1,33 @@
 #item {
     border: 2px red solid;
     border-radius: 10px;
-    margin: 10px;
     display: flex;
-    justify-content: space-between;
-    padding: 10px;
-    width: 200px;
-    margin: auto;
-    margin-bottom: 20px;
-    margin-top: 10px;
+    justify-content: space-around;
+    align-items: center;
+    max-width: 150 rems;
+    margin:5rem;
+    background-color: blanchedalmond;
     
 }
 img{
-    width: 50px;
-    height: 50p;
-    margin: 10px;
+    width: 10rem;
+    height: 10rem;
+    border-radius: 50%;
+    padding: 30px;
 
-}
+;}
  #button{
     height: min-content;
     width: min-content;
     text-align: center;
     padding:initial;
+    height: 8rem;
+    width: 8rem;
+    font-size: large;
+    border-color: tomato;
+    font-family: Monospace;
+    
+
+      
 
  }
