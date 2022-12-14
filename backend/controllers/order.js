@@ -16,13 +16,13 @@ const orderUpdate = async (req, res) => {
       .send(`No product was found by the name ${req.body.productName}`);
   }
 
-  let isOrderExist = await Order.find();
+  let orders = await Order.find();
   //order does not exist
   let isProductExist;
   let newOrder;
-  if (isOrderExist.length === 0) {
+  if (orders.length === 0) {
     newOrder = new Order({
-      products: [orderProduct(product_scheme)],
+      products: orderProduct(product_scheme),
     });
     result = await newOrder.save();
     if (!result) {
@@ -32,16 +32,23 @@ const orderUpdate = async (req, res) => {
     }
   } else {
     //order exist and product already exist in products' order list
-    isProductExist = await Order.findOne({
-      products: { $elemMatch: { product: product_scheme._id } },
+    // isProductExist = await Order.findOne({
+    //   products: { $elemMatch: { product: product_scheme._id } },
+    // });
+
+    const theProductFromMongo = await Product.find({
+      name: req.body.productName,
     });
+    const idOfProduct = theProductFromMongo._id;
+    const isProductExist = orders[0].products.find(
+      (obj) => obj.product == idOfProduct
+    );
     if (isProductExist) {
-      update = { $inc: { "products.$.amount": 1 } };
       result = await Order.updateOne(
         {
           products: { $elemMatch: { product: product_scheme._id } },
         },
-        update
+        { $inc: { "products.$.amount": 1 } }
       );
       if (!result) {
         return res
@@ -50,7 +57,10 @@ const orderUpdate = async (req, res) => {
       }
     } else {
       //Order exists, but product is not yet listed in order's product list
-      result = await Order.update({});
+      result = await Order.update(
+        {},
+        { $push: { products: orderProduct(product_scheme) } }
+      );
       if (!result) {
         return res
           .status(StatusCodes.INTERNAL_SERVER_ERROR)
@@ -62,11 +72,16 @@ const orderUpdate = async (req, res) => {
 };
 
 function orderProduct(product_scheme) {
-  return (orderProduct = new OrderProduct({
+  return new OrderProduct({
     product: product_scheme._id,
     amount: 1,
-  }));
+  });
 }
+
+// function sum(int a, int b) {
+//     sum = 'hei';
+//     return a + b;
+// }
 
 const orderDelete = async (req, res) => {
   result = await Order.findOneAndDelete({});
@@ -110,6 +125,7 @@ const orderList = async (req, res) => {
   }
 
   var products = [];
+  console.log(result);
   if (result.length > 0) {
     for (let i = 0; i < result.length; i++) {
       for (product of result[i].products) {

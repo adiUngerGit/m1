@@ -1,20 +1,23 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const OrderProductSchema = new mongoose.Schema({
-    product: { type: mongoose.Schema.Types.ObjectId, ref: 'Product' },
-    amount: {
-        type: Number
-    }
+  product: { type: mongoose.Schema.Types.ObjectId, ref: "Product" },
+  amount: {
+    type: Number,
+  },
 });
 
-const orderSchema = new mongoose.Schema({
+const orderSchema = new mongoose.Schema(
+  {
     products: [OrderProductSchema],
-}, {autoCreate: true});
+  },
+  { autoCreate: true }
+);
 
-const myDB = mongoose.connection.useDb('orders');
+const myDB = mongoose.connection.useDb("orders");
 
-const OrderProduct = mongoose.model('orderedProduct', OrderProductSchema);
+const OrderProduct = mongoose.model("orderedProduct", OrderProductSchema);
 
-const Order = mongoose.model('order', orderSchema);
+const Order = mongoose.model("order", orderSchema);
 
-module.exports = { Order, OrderProduct }
+module.exports = { Order, OrderProduct };

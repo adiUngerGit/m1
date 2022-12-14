@@ -24,6 +24,8 @@ app.use(express.urlencoded({ extended: true })); // to support URL-encoded bodie
 
 app.use("/api", AppRouter);
 
+// app.use("/fatut", require("./routes/fatut"));
+
 const server = http.createServer(app);
 const start = async () => {
   try {
