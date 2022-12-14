@@ -43,7 +43,7 @@ function ShopList() {
             ></Item>
           );
         })}
-      <p>{"sum of all my card: " + sum + "$"}</p>
+      <p>{"sum of all my cart: " + sum + "$"}</p>
       <button
         id="b-send"
         onClick={() => {
@@ -51,7 +51,7 @@ function ShopList() {
           axios.post("http://localhost:9898/api/orders/update", data);
         }}
       >
-        I whant to buy it!
+        I want to buy it!
       </button>
       {/* <p>{localStorage.getItem(JSON.stringify("productToSuperMarket"))}</p> */}
     </div>
